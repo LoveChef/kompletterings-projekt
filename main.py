@@ -29,3 +29,7 @@ class Movie:
         print(f"Info om: {self.titel}")
         print(f"Beskrivning: {data['overview']}")
         print(f"Betyg: {data['vote_average']}")
+
+def meny(result, type):
+    print("Välj alternativ")
+    for i, item in enumerate
