@@ -60,35 +60,36 @@ class TMDB:
         print("- - - - - - - - - - ")
     
 def show_result(api, type, query, tmdb_class):
-    result = api.search(type, query)
+    result = api.search(type, query) # gör sökningen, söker alltså efter parametrarna
     for result in result:
         
-        tmdb = tmdb_class(result["title"], result.get("release_date"), result["overview"], result["vote_average"])
+        tmdb = tmdb_class(result["title"], result.get("release_date"), result["overview"], result["vote_average"]) # skaopar tmdb objekt av informationen
         tmdb.show_info()
 
 def Main():
     api_key = "52642a868038e1153406d79c42346aae"
-    tmdb_search = TMDBSearch(api_key)
+    tmdb_search = TMDBSearch(api_key) # skapar instansen av tmdbsearchw
     
     while True:
+        # menyn
         print("- - - - - - - - - - ")
         print("🍿| 1. Film")
         print("🎥| 2. Tv serie")
         print("👤| 3. Sök efter en skådis")
         print("❌| 4. Stäng")
         print("- - - - - - - - - - ")
-        choice = input("🔎|Välj vad du vill söka: ")
+        choice = input("🔎|Välj vad du vill söka: ") # valet användaren gör
         
         if choice == "1":
             query = input("Skriv namnet på filmen: ")
-            show_result(tmdb_search, "movie", query, TMDB)
+            show_result(tmdb_search, "movie", query, TMDB) # Visar sökresultat för film
         elif choice == "2":
             query = input("Skriv namnet på TV-serien: ")
-            show_result(tmdb_search, "tv", query, TMDB)
+            show_result(tmdb_search, "tv", query, TMDB) #-||- serie
         elif choice == "3":
-            query = input("Skriv namnet på skådisen: ")
+            query = input("Skriv namnet på skådisen: ") #-||- skådis
             show_result(tmdb_search, "person", query, TMDB)
-        elif choice == "4":
+        elif choice == "4": # stänger programmet
             break
         else:
             print("Fel")
