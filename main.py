@@ -29,7 +29,7 @@ class TMDBSearch:
         """
         url = f"{self.api_url}/search/{type}"
         parameter = {"api_key": self.api_key, "query": query}
-        response = requests.get(url, parameter=parameter)
+        response = requests.get(url, params=parameter)
         data = response.json()
         
         return data ["results"]
@@ -59,19 +59,38 @@ class TMDB:
         print("⭐|Votes:", self.vote)
         print("- - - - - - - - - - ")
     
-    def show_result(api, type, query, tmdb_class):
-        result = api.search(type, query)
-        for result in result:
-            tmdb = tmdb_class(result["title"], result.get("release_date"), result["overview"], result["vote_average"])
-            tmdb.show_info()
-    
-    def Main():
+def show_result(api, type, query, tmdb_class):
+    result = api.search(type, query)
+    for result in result:
         
-        while True:
-            print("- - - - - - - - - - ")
-            print("| 1. Film")
-            print("| 2. Tv serie")
-            print("| 3. Sök efter en skådis")
-            print("| 4. Stäng")
-            print("- - - - - - - - - - ")
-            choice = input("🔎|Välj vad du vill söka")
+        tmdb = tmdb_class(result["title"], result.get("release_date"), result["overview"], result["vote_average"])
+        tmdb.show_info()
+
+def Main():
+    api_key = "52642a868038e1153406d79c42346aae"
+    tmdb_search = TMDBSearch(api_key)
+    
+    while True:
+        print("- - - - - - - - - - ")
+        print("🍿| 1. Film")
+        print("🎥| 2. Tv serie")
+        print("👤| 3. Sök efter en skådis")
+        print("❌| 4. Stäng")
+        print("- - - - - - - - - - ")
+        choice = input("🔎|Välj vad du vill söka: ")
+        
+        if choice == "1":
+            query = input("Skriv namnet på filmen: ")
+            show_result(tmdb_search, "movie", query, TMDB)
+        elif choice == "2":
+            query = input("Skriv namnet på TV-serien: ")
+            show_result(tmdb_search, "tv", query, TMDB)
+        elif choice == "3":
+            query = input("Skriv namnet på skådisen: ")
+            show_result(tmdb_search, "person", query, TMDB)
+        elif choice == "4":
+            break
+        else:
+            print("Fel")
+if __name__ == "__main__":
+    Main()
