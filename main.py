@@ -24,6 +24,8 @@ class TMDBSearch:
 
         Returns:
             list: lista på sökningsresultat.
+            
+        Lösningen med att använda sig av en bas url där man lägger in apin samt typ av sökning tog jag inspiration av från stack
         """
         url = f"{self.api_url}/search/{type}"
         parameter = {"api_key": self.api_key, "query": query}
@@ -31,7 +33,6 @@ class TMDBSearch:
         data = response.json()
         
         return data ["results"]
-        
         
         
 class TMDB:
@@ -63,3 +64,14 @@ class TMDB:
         for result in result:
             tmdb = tmdb_class(result["title"], result.get("release_date"), result["overview"], result["vote_average"])
             tmdb.show_info()
+    
+    def Main():
+        
+        while True:
+            print("- - - - - - - - - - ")
+            print("| 1. Film")
+            print("| 2. Tv serie")
+            print("| 3. Sök efter en skådis")
+            print("| 4. Stäng")
+            print("- - - - - - - - - - ")
+            choice = input("🔎|Välj vad du vill söka")
