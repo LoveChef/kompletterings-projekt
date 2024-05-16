@@ -52,18 +52,42 @@ class TMDB:
     def show_info(self):
         """Printar informationmen
         """
-        print("- - - - - - - - - - ")
-        print("📜|Title:", self.title)
-        print("📆|Date:", self.date)
-        print("📝|Overview:", self.overview)
-        print("⭐|Votes:", self.vote)
-        print("- - - - - - - - - - ")
+        # Infon för film o tv serier
+        if type == "movie" or "tv":
+            print("📜| Title:", self.title)
+            print("📆| Release Date:", self.date)
+            print("📝| Overview:", self.overview)
+            print("⭐| Votes:", self.vote)
+            print("- - - - - - - - - - ")
+        # Infon för film o tv serier
+        elif type == "person":
+            print("👤| Name:", self.title)
+            print("📜| Known for:", self.date)
+            print("⭐| Popularity:", self.vote)
+            print("- - - - - - - - - - ")
     
 def show_result(api, type, query, tmdb_class):
     result = api.search(type, query) # gör sökningen, söker alltså efter parametrarna
-    for result in result:
+    for result in result: # Ifall man väljer t.ex tv så har namnet och datumet andra variabler i apin, den byter alltså ut.
+        if type == "movie":
+            vote = result["vote_average"]
+            overview = result["overview"]
+            title= result["title"]
+            date = result.get["release_date"]
+        elif type == "tv":
+            vote = result["vote_average"]
+            title = result["name"]
+            overview = result["overview"]
+            date = result["first_air_date"]
+        elif type == "person":
+            title = result["name"]
+            date = result["known_for_department"]
+            vote = result["popularity"]
+            overview = ""
+        else:
+            continue
         
-        tmdb = tmdb_class(result["title"], result.get("release_date"), result["overview"], result["vote_average"]) # skaopar tmdb objekt av informationen
+        tmdb = tmdb_class(title, date, overview, vote)        
         tmdb.show_info()
 
 def Main():
@@ -81,13 +105,13 @@ def Main():
         choice = input("🔎|Välj vad du vill söka: ") # valet användaren gör
         
         if choice == "1":
-            query = input("Skriv namnet på filmen: ")
+            query = input("🍿| Skriv namnet på filmen: ")
             show_result(tmdb_search, "movie", query, TMDB) # Visar sökresultat för film
         elif choice == "2":
-            query = input("Skriv namnet på TV-serien: ")
+            query = input("🎥| Skriv namnet på TV-serien: ")
             show_result(tmdb_search, "tv", query, TMDB) #-||- serie
         elif choice == "3":
-            query = input("Skriv namnet på skådisen: ") #-||- skådis
+            query = input("👤| Skriv namnet på skådisen: ") #-||- skådis
             show_result(tmdb_search, "person", query, TMDB)
         elif choice == "4": # stänger programmet
             break
