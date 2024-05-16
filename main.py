@@ -91,7 +91,7 @@ def show_result(api, type, query, tmdb_class):
         tmdb.show_info()
 
 def Main():
-    api_key = "52642a868038e1153406d79c42346aae"
+    api_key = "52642a868038e1153406d79c42346aae" # Api nyckeln
     tmdb_search = TMDBSearch(api_key) # skapar instansen av tmdbsearchw
     
     while True:
